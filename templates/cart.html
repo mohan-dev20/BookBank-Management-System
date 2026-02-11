@@ -1,0 +1,22 @@
+<h2>My Cart</h2>
+
+{% if cart_items %}
+    {% for item in cart_items %}
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/' ~ item.image) }}" width="100">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.author }}</p>
+
+            <a href="{{ url_for('borrow_book', book_id=item.id) }}" class="btn btn-success">
+                Borrow
+            </a>
+
+            <a href="{{ url_for('remove_from_cart', cart_id=item.id) }}"
+               class="btn btn-danger">
+               Remove
+            </a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No books in cart</p>
+{% endif %}

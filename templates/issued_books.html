@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issued Books</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+
+<h2>📄 Issued Books</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>Student</th>
+        <th>Issue Date</th>
+        <th>Return Date</th>
+        <th>Status</th>
+    </tr>
+
+    {% for row in issued %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="6">No books issued</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="{{ url_for('admin_dashboard') }}">⬅ Back to Dashboard</a>
+
+</body>
+</html>

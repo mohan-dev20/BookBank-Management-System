@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard | Book Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; }
+        .book-card img {
+            height: 220px;
+            object-fit: cover;
+        }
+        .navbar-brand { font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-primary px-4">
+    <span class="navbar-brand">🎓 Student Dashboard</span>
+    <div>
+        <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <!-- MY BORROWED BOOKS -->
+    <h4 class="mb-3">📚 My Borrowed Books</h4>
+
+    {% if borrowed_books %}
+        <table class="table table-bordered table-striped bg-white">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in borrowed_books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.due_date }}</td>
+                    <td>
+                        <a href="{{ url_for('return_book', issue_id=book.issue_id) }}"
+                           class="btn btn-warning btn-sm">
+                            Return
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">No books borrowed yet.</div>
+    {% endif %}
+
+    <hr class="my-4">
+
+    <!-- AVAILABLE BOOKS -->
+    <h4 class="mb-3">📖 Available Books</h4>
+
+    <div class="row">
+        {% for book in available_books %}
+        <div class="col-md-3 mb-4">
+            <div class="card book-card shadow-sm h-100">
+                <img src="{{ url_for('static', filename='images/' ~ book.image) }}"
+                  class="card-img-top"
+                  onerror="this.onerror=null;this.src='/static/images/default.png';">
+
+
+                <div class="card-body">
+                    <h6 class="card-title">{{ book.title }}</h6>
+                    <p class="text-muted mb-1">{{ book.author }}</p>
+                    <p class="small">Available: {{ book.quantity }}</p>
+                </div>
+
+                <div class="card-footer text-center">
+                    <a href="{{ url_for('borrow_book', book_id=book.id) }}"
+                       class="btn btn-success btn-sm mb-1">
+                        Borrow
+                    </a>
+                    <a href="{{ url_for('add_to_cart', book_id=book.id) }}"
+                       class="btn btn-outline-primary btn-sm">
+                        Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

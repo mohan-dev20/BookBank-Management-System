@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Books</title>
+</head>
+<body>
+    <h2>Issued Books</h2>
+
+    {% for row in rows %}
+        <p>
+            {{ row.title }} | Due: {{ row.due_date }}
+            <a href="/return/{{ row.id }}">Return</a>
+        </p>
+    {% else %}
+        <p>No books issued</p>
+    {% endfor %}
+</body>
+</html>

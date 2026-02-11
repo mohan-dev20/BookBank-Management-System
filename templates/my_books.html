@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Borrowed Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<table class="table table-bordered">
+<thead class="table-dark">
+<tr>
+  <th>Book</th>
+  <th>Due Date</th>
+  <th>Fine</th>
+  <th>Status</th>
+  <th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+{% for b in books %}
+<tr>
+  <td>{{ b.title }}</td>
+  <td>{{ b.due_date }}</td>
+  <td>
+    {% if b.fine > 0 %}
+      ₹{{ b.fine }}
+    {% else %}
+      No Fine
+    {% endif %}
+  </td>
+
+  <td>
+    {% if b.fine > 0 and b.paid == 0 %}
+      <span class="badge bg-danger">Unpaid</span>
+    {% else %}
+      <span class="badge bg-success">Paid</span>
+    {% endif %}
+  </td>
+
+  <td>
+    {% if b.fine > 0 and b.paid == 0 %}
+      <a href="{{ url_for('pay_fine', issue_id=b.id) }}"
+         class="btn btn-warning btn-sm">
+         Pay Fine
+      </a>
+    {% else %}
+      <a href="{{ url_for('return_book', issue_id=b.id) }}"
+         class="btn btn-success btn-sm">
+         Return
+      </a>
+    {% endif %}
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<div class="container mt-4">
+    <h3 class="mb-3">📕 My Borrowed Books</h3>
+
+    {% if books %}
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Book</th>
+                <th>Due Date</th>
+                <th>Fine (₹)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in books %}
+            <tr>
+                <td>{{ b.title }}</td>
+                <td>{{ b.due_date }}</td>
+                <td>
+                    {% if b.fine > 0 %}
+                        <span class="text-danger fw-bold">₹{{ b.fine }}</span>
+                    {% else %}
+                        <span class="text-success">No Fine</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('return_book', issue_id=b.id) }}"
+                       class="btn btn-success btn-sm">
+                        Return
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No borrowed books.</p>
+    {% endif %}
+
+    <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary mt-3">
+        ← Back to Dashboard
+    </a>
+</div>
+
+</body>
+</html>

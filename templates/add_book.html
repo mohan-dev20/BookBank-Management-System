@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Book | Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 420px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .preview {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .preview img {
+            max-width: 150px;
+            border-radius: 5px;
+            display: none;
+            border: 1px solid #ccc;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📘 Add New Book</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <label>Book Title</label>
+        <input type="text" name="title" required>
+
+        <label>Author</label>
+        <input type="text" name="author" required>
+
+        <label>Quantity</label>
+        <input type="number" name="quantity" min="1" required>
+
+        <label>Book Image</label>
+        <input type="file" name="image" accept="image/*" onchange="previewImage(event)" required>
+
+        <div class="preview">
+            <img id="imgPreview">
+        </div>
+
+        <button type="submit">➕ Add Book</button>
+    </form>
+
+    <div class="back">
+        <a href="/admin">⬅ Back to Dashboard</a>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const img = document.getElementById('imgPreview');
+        img.src = URL.createObjectURL(event.target.files[0]);
+        img.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
